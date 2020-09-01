@@ -1,0 +1,7 @@
+port: "9000"
+
+port_db: "5432"
+host: "127.0.0.1"
+db_name: "chat_db"
+username: "danil"
+password: "123"
