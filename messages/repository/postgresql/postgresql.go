@@ -80,16 +80,16 @@ func (r *PostgresqlStorage) GetMessagesByChatID(c *gin.Context, chat *models.Cha
 
 	// convert to models message
 	rez := []models.Message{}
-	for _, j := range messageORM {
-		chatSTR := strconv.Itoa(j.Chat)
-		authorSTR := strconv.Itoa(j.Author)
+	for _, message := range messageORM {
+		chatSTR := strconv.Itoa(message.Chat)
+		authorSTR := strconv.Itoa(message.Author)
 
 		rez = append(rez, models.Message{
-			Id:        j.Id,
+			Id:        message.Id,
 			Chat:      chatSTR,
 			Author:    authorSTR,
-			Text:      j.Text,
-			CreatedAt: j.CreatedAt,
+			Text:      message.Text,
+			CreatedAt: message.CreatedAt,
 		})
 	}
 

@@ -26,23 +26,23 @@ func NewHandlerChats(useCase chats.UseCaseChats) *HandlerChats {
 }
 
 func (h *HandlerChats) AddChat(c *gin.Context) {
-	var json models.Chat
+	var jsonData models.Chat
 
 	// unmarshal
-	err := c.ShouldBindJSON(&json)
+	err := c.ShouldBindJSON(&jsonData)
 	if err != nil {
 		log.Error(err)
 		c.String(http.StatusBadRequest, "invalid json")
 	}
 
 	// validation data
-	if len(json.Users) <= 1 || strings.TrimSpace(json.Name) == "" || json.Id != 0 {
+	if len(jsonData.Users) <= 1 || strings.TrimSpace(jsonData.Name) == "" || jsonData.Id != 0 {
 		log.Error(err)
 		c.String(http.StatusBadRequest, err.Error())
 	}
 
 	// add chat -> UseCase
-	chat, err := h.UseCase.AddChat(c, &json)
+	chat, err := h.UseCase.AddChat(c, &jsonData)
 	if err != nil {
 		log.Error(err)
 		c.String(http.StatusBadRequest, err.Error())
@@ -52,22 +52,22 @@ func (h *HandlerChats) AddChat(c *gin.Context) {
 }
 
 func (h *HandlerChats) GetChatsHandler(c *gin.Context) {
-	var json PostGetChats
+	var jsonData PostGetChats
 
 	// unmarshal
-	err := c.ShouldBindJSON(&json)
+	err := c.ShouldBindJSON(&jsonData)
 	if err != nil {
 		log.Error(err)
 		c.String(http.StatusBadRequest, "invalid json")
 	}
 
 	// validation data
-	if strings.TrimSpace(json.UserID) == "" {
+	if strings.TrimSpace(jsonData.UserID) == "" {
 		log.Error(err)
 		c.String(http.StatusBadRequest, "invalid json")
 	}
 
-	intUserID, err := strconv.Atoi(json.UserID)
+	intUserID, err := strconv.Atoi(jsonData.UserID)
 	if err != nil {
 		log.Error(err)
 		c.String(http.StatusBadRequest, "invalid json")

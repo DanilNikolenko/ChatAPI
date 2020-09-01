@@ -29,13 +29,13 @@ func (r *PostgresqlStorageChats) AddChatToDB(c *gin.Context, chat *models.Chat) 
 	intSliceUsers := make([]int, len(chat.Users), len(chat.Users))
 
 	// cycle to convert
-	for i, j := range chat.Users {
-		tempInt, err := strconv.Atoi(j)
+	for index, user := range chat.Users {
+		tempUserID, err := strconv.Atoi(user)
 		if err != nil {
 			log.Error(err)
 			return nil, errors.New("Invalid slice users ")
 		}
-		intSliceUsers[i] = tempInt
+		intSliceUsers[index] = tempUserID
 	}
 
 	// make orm struct
